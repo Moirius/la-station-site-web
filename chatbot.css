@@ -86,3 +86,11 @@ body {
   margin-top: 10px;
   display: none;
 }
+
+.chatbox strong {
+  font-weight: 800;
+  background-color: #ffe9c4;
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
