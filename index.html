@@ -20,7 +20,7 @@
 
        <!-- Logo principal -->
        <div id="logo-container" class="logo-large">
-        <img src="./miniatures/elements/LOGO_LA_STATION_06_off2.png" id="logo-image" alt="Logo du site">
+        <img src="./miniatures/elements/LOGO_LA_STATION_transp.png" id="logo-image" alt="Logo du site">
     </div>
 
 
@@ -88,5 +88,23 @@
 
     <div id="log-list" style="position: fixed; bottom: 0; left: 0; width: 100%; max-height: 200px; overflow-y: auto; background: rgba(0, 0, 0, 0.9); color: white; font-size: 12px; padding: 10px; z-index: 10000;"></div>
     
+
+    <script>
+        window.addEventListener("DOMContentLoaded", async () => {
+          const existing = sessionStorage.getItem("initialResponse");
+          if (existing) return; // Ne relance pas si déjà préchargée
+      
+          const res = await fetch("https://chatbot-o4gm.onrender.com/ask", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query: "C'est quoi La Station Production ?" })
+          });
+      
+          const data = await res.json();
+          const raw = data.answer?.content || "Réponse indisponible pour le moment.";
+          sessionStorage.setItem("initialResponse", raw);
+        });
+      </script>
+      
 </body>
 </html>

@@ -92,6 +92,7 @@
 #logo-container img {
   max-width: 35%; /* Assure que l'image respecte les dimensions */
   transition: max-width 0.5s ease, transform 0.5s ease; /* Transition fluide */
+  
 
 }
 
@@ -118,13 +119,22 @@
 /* Logo agrandi */
 .logo-large img {
 
+ 
   text-align: left;
-  transform-origin: top left;
+  /* margin: 0; */
   padding: 2vh;
   position: fixed;
+  /* left: 1vh; */
+  /* bottom: 50%; */
   z-index: 100;
   user-select: none;
-  transform: scale(1); /* Réinitialisation de l'effet */
+  transform: scale(0.9); /* Réinitialisation de l'effet */
+  transform-origin: top left;
+}
+
+
+.logo-large img:hover {
+  transform: scale(1.05); /* Réinitialisation de l'effet */
 }
 
 /* Masquer les boutons et le texte */

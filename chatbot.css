@@ -1,53 +1,70 @@
-* { box-sizing: border-box; }
-
 body {
   margin: 0;
   padding: 0;
-  background: #ffffff;
   font-family: 'Aventa', sans-serif;
-  color: #111;
+  background-color: #000; /* fond noir */
+  color: #fff; /* texte blanc */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.sidebar {
-  width: 220px;
-  background: #ffffff;
-  padding: 40px 20px;
-  display: flex;
-  align-items: flex-start;
-}
-
-.sidebar img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
 .content {
-  flex: 1;
+  background-color: transparent;
+  width: 100%;
+  max-width: 800px;
+  padding: 40px 20px 180px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 60px;
+  justify-content: flex-start;
 }
 
 #chatbox {
-  font-size: 1.6rem;
-  line-height: 1.8;
-  white-space: pre-wrap;
-  max-width: 900px;
-  margin-bottom: 40px;
+  flex: 1;
+  overflow-y: auto;
+  font-size: 1.2rem;
+  color: #fff;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+#loader {
+  font-size: 0.9rem;
+  color: #ccc;
+  display: none;
+  margin-bottom: 15px;
 }
 
 .input-zone {
+  background-color: transparent;
+  padding: 0 20px 25px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-width: 900px;
+  gap: 15px;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
+  max-width: 800px;
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+#userInput {
+  background-color: #fffdfd;
+  color: #000000;
+  border: none;
+  padding: 18px 25px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-family: 'Aventa', sans-serif;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
 }
 
 .shortcuts {
@@ -57,42 +74,159 @@ body {
 }
 
 .shortcut-btn {
-  background: #f0f0f0;
-  border: none;
-  border-radius: 25px;
-  padding: 12px 20px;
-  font-size: 1rem;
+  color: #000000fb;
+  background-color: #fffbfb;
+  border: 1px solid #444;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-family: 'Aventa', sans-serif;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
 }
 
 .shortcut-btn:hover {
-  background: #e0e0e0;
+  background-color: #333;
 }
 
-#userInput {
-  width: 100%;
-  padding: 20px;
-  font-size: 1.5rem;
-  border: none;
-  border-radius: 30px;
-  outline: none;
-  background: #444;
-  color: #fff;
-  font-family: 'DM Sans', sans-serif;
+#logo-container {
+  text-align: left;
+  margin: 0;
+  padding: 2vh;
+  position: fixed;
+  z-index: 100;
+  user-select: none;
+  top: 20px;
+  left: 20px;
 }
 
-#loader {
-  font-style: italic;
-  font-size: 1rem;
-  margin-top: 10px;
-  display: none;
+#logo-container img {
+  max-width: 35%;
+  transition: max-width 0.5s ease, transform 0.5s ease;
 }
 
-.chatbox strong {
-  font-weight: 800;
-  background-color: #ffe9c4;
-  padding: 0 4px;
-  border-radius: 4px;
+.logo-small img {
+  text-align: left;
+  padding: 2vh;
+  position: fixed;
+  z-index: 100;
+  user-select: none;
+  transform: scale(0.5);
+  transform-origin: top left;
 }
 
+.logo-small img:hover {
+  transform: scale(0.53);
+}
+
+/* Animation precise focus */
+.precision-loader {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: white;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.precision-loader.idle {
+  animation: none;
+  opacity: 0.7;
+}
+
+.precision-loader.active {
+  animation: preciseFocus 2.6s infinite;
+  opacity: 1;
+}
+
+@keyframes preciseFocus {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.8;
+  }
+  10% {
+    transform: scale(1.15) translate(1px, -2px);
+    opacity: 1;
+  }
+  20% {
+    transform: scale(0.95) translate(-2px, 1px);
+    opacity: 0.7;
+  }
+  35% {
+    transform: scale(1.05) translate(0px, -1px);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.2) translate(2px, 2px);
+    opacity: 1;
+  }
+  65% {
+    transform: scale(0.9) translate(-1px, -3px);
+    opacity: 0.6;
+  }
+  80% {
+    transform: scale(1.1) translate(0px, 1px);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.8;
+  }
+}
+
+
+/* ---------- Responsive : Smartphones et Tablettes ---------- */
+@media (max-width: 768px) {
+
+  .content {
+    padding: 20px 10px 140px;
+    max-width: 100%;
+  }
+
+  #chatbox {
+    font-size: 1rem;
+    line-height: 1.4;
+    max-height: 60vh;
+  }
+
+  .input-zone {
+    padding: 0 15px 20px;
+    max-width: 100%;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  #userInput {
+    padding: 14px 20px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+  }
+
+  .shortcuts {
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .shortcut-btn {
+    font-size: 0.8rem;
+    padding: 8px 14px;
+    border-radius: 18px;
+    box-shadow: none;
+  }
+
+  #logo-container {
+    top: 10px;
+    left: 10px;
+    padding: 1vh;
+  }
+
+  #logo-container img {
+    max-width: 50%;
+  }
+
+  .precision-loader {
+    width: 50px;
+    height: 50px;
+  }
+}
