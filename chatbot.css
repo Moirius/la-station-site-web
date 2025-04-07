@@ -1,0 +1,88 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  font-family: 'DM Sans', sans-serif;
+  color: #111;
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  background: #ffffff;
+  padding: 40px 20px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.sidebar img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 60px;
+}
+
+#chatbox {
+  font-size: 1.6rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  max-width: 900px;
+  margin-bottom: 40px;
+}
+
+.input-zone {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 900px;
+  width: 100%;
+}
+
+.shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.shortcut-btn {
+  background: #f0f0f0;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.shortcut-btn:hover {
+  background: #e0e0e0;
+}
+
+#userInput {
+  width: 100%;
+  padding: 20px;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 30px;
+  outline: none;
+  background: #444;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+}
+
+#loader {
+  font-style: italic;
+  font-size: 1rem;
+  margin-top: 10px;
+  display: none;
+}

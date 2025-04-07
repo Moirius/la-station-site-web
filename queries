@@ -1,0 +1,743 @@
+
+@media only screen and (max-width: 767px) {
+
+
+/* ---- Grille des miniatures ---- */
+.moodboard-grid {
+  display: grid;
+  gap: 15px;
+  grid-template-columns: repeat(25, 70px);
+  grid-template-rows: repeat(auto, 25px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: center center; /* Important pour éviter les conflits avec scale */
+  /* transition: transform 0.5s ease; */
+  outline: 2px transparent;
+  cursor: grab;
+
+  touch-action: none; /* Empêche le comportement par défaut comme le défilement */
+
+  will-change: transform;
+  backface-visibility: hidden; /* Améliore les performances */
+  user-select: none;
+  --border-radius: 15px;
+
+
+}
+
+
+
+.moodboard-grid:active {
+  cursor: grabbing;
+}
+
+.moodboard-grid.filter-mode {
+  grid-template-columns: repeat(11, 60px);
+}
+
+
+.moodboard-container.moodboard-reduced .moodboard-grid {
+  display: grid;
+  gap: 5px; /* Espacement entre les miniatures réduit */
+  grid-template-columns: repeat(25, 10px); /* Colonnes étroites */
+  grid-template-rows: repeat(auto, 5px); /* Lignes étroites */
+  transform: scale(0.53); /* Réduction de l'échelle */
+
+  --border-radius: 3px; /* Bord réduit */
+}
+
+.moodboard-container.moodboard-full .moodboard-grid {
+  display: grid;
+  gap: 15px; /* Espacement entre les miniatures normal */
+  grid-template-columns: repeat(13, 40px); /* Colonnes normales */
+  grid-template-rows: repeat(auto, 25px); /* Lignes normales */
+  transform: scale(1); /* Taille normale */
+
+  border-radius: 15px; /* Bord normal */
+}
+
+#logo-container {
+  text-align: left;
+  margin: 0;
+  padding: 20px;
+  position: fixed;
+  z-index: 100;
+  user-select: none;
+}
+
+
+#logo-container img {
+  max-width: 50%; /* Assure que l'image respecte les dimensions */
+  transition: max-width 0.5s ease, transform 0.5s ease; /* Transition fluide */
+}
+
+/* Logo réduit */
+.logo-small img {
+  max-width: 40%; /* Assure que l'image respecte les dimensions */
+  text-align: left;
+  margin: 0;
+  padding: 20px;
+  position: fixed;
+  right: 50%;
+  bottom: 80%;
+
+  z-index: 100;
+  user-select: none;
+  transform: scale(0.5); /* Réinitialisation de l'effet */
+  transform-origin: center;
+}
+
+.logo-small img:hover {
+  transform: scale(0.5); /* Réinitialisation de l'effet */
+}
+
+.logo-large img:hover {
+  transform: scale(1.); /* Réinitialisation de l'effet */
+}
+
+/* Logo agrandi */
+.logo-large img {
+  right: 40%;
+  bottom: 75%;
+  max-width: 40%; /* Assure que l'image respecte les dimensions */
+  text-align: left;
+  margin: 0;
+  padding: 20px;
+  position: fixed;
+  z-index: 100;
+  user-select: none;
+  transform: scale(1); /* Réinitialisation de l'effet */
+  transform-origin: center;
+}
+
+/* Masquer les boutons et le texte */
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease; /* Disparition fluide */
+}
+
+
+#description {
+  left: -18%;
+  top: 7%;
+  position: absolute;
+
+  text-align: left;
+
+  font-family: 'aventa'; /* Police que vous avez intégrée */
+  color: white;
+  
+  line-height: 1;
+
+}
+
+#description h1 {
+  font-size: 13px;
+  font-weight: bold;
+
+  line-height: 1;
+}
+
+#description p {
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: bold;
+}
+
+
+
+#filter-buttons {
+  position: absolute;
+ top: 2.5%; /* Distance depuis le haut */
+  left: 45%; /* Distance depuis le bord droit */
+  display: flex;
+  flex-direction: column; /* Aligner les boutons verticalement */
+  align-items: flex-start; /* Les aligner à gauche */
+  gap : 20px;
+
+
+}
+
+.filter-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-family: 'arges'; /* Police intégrée */
+  font-size: 55px;
+  text-transform: uppercase;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.3s;
+  line-height: 80%; /* Espacement entre les lignes à l'intérieur d'un bouton */
+  font-weight: 300;
+  /* Supprimer `gap` ici car ce n'est pas applicable */
+}
+
+.filter-btn:hover {
+  color: #e0e0e0;
+  transform: scale(1.05); /* Zoom léger */
+}
+
+
+
+/* ---- Style de la fenêtre modale ---- */
+.modal {
+  display: none;
+  position: fixed;
+  top: 15%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: var(--z-index-modal);
+  justify-content: center; /* Centre horizontalement */
+  align-items: center;    /* Centre verticalement */
+  pointer-events: none;
+}
+
+
+.modal.active {
+display:flex;
+pointer-events: auto;
+user-select: none;
+}
+
+.modal-content {
+position: fixed;
+width: 90%;
+max-width: 900px;
+margin: auto; /* Centre le contenu horizontalement */
+user-select: none;
+top: 15%;
+}
+
+
+/* Bouton pour fermer la modale */
+.close {
+position: absolute;
+top: 10px;
+right: 20px;
+color: white;
+font-size: 24px;
+cursor: pointer;
+}
+
+iframe {
+width: 100%;
+height: 200px;
+
+
+}
+
+
+/* Panel de crédits */
+.credits-panel {
+  position: fixed;
+  top: 45%;
+  left: 0px; /* Position à gauche */
+  width: 400px;
+
+
+  background: transparent; /* Fond transparent */
+  color: white;
+  padding: 2rem;
+  transition: opacity 0.3s var(--transition-ease);
+  z-index: var(--z-index-modal);
+  opacity: 0;
+  pointer-events: none;
+  font-family: 'aventa';
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.credits-panel.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.credits-header {
+  margin-top: 0.0rem;
+}
+
+.credits-header h2 {
+  margin: 0;
+  font-size: 1rem;
+  color: white;
+  font-weight: 800;
+  
+}
+
+.credits-section {
+  margin-bottom: 0rem;
+}
+
+.credits-role {
+  color: rgb(255, 255, 255);
+  font-size: 0.6rem;
+  margin-top: 0.0rem;
+
+  font-weight: 800;
+  letter-spacing: 0rem;
+}
+
+.credits-name {
+  display: inline-block;
+  cursor: pointer;
+  padding: 0.1rem 0;
+  margin-right: 0.5rem;
+  font-size: 0.5rem;
+  font-weight: 700;
+  margin-bottom: 0;
+
+  color: rgba(255, 255, 255, 0.452); /* Couleur initiale */
+}
+
+.credits-name:hover {
+  transform: scale(1.1); /* Agrandit légèrement le texte */
+  color: #ffffff; /* Change la couleur en blanc pur */
+}
+
+/* Cache la croix de fermeture puisque le générique se fermera avec la modale */
+.credits-close {
+  display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+ @media only screen and (min-width: 468px) and (max-width: 1224px) {
+
+
+
+/* ---- Grille des miniatures ---- */
+.moodboard-grid {
+  display: grid;
+  gap: 15px;
+  grid-template-columns: repeat(25, 70px);
+  grid-template-rows: repeat(auto, 25px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: center center; /* Important pour éviter les conflits avec scale */
+  /* transition: transform 0.5s ease; */
+  outline: 2px transparent;
+  cursor: grab;
+
+  touch-action: none; /* Empêche le comportement par défaut comme le défilement */
+
+  will-change: transform;
+  backface-visibility: hidden; /* Améliore les performances */
+  user-select: none;
+  --border-radius: 10px;
+
+
+}
+
+
+
+.moodboard-grid:active {
+  cursor: grabbing;
+}
+
+.moodboard-grid.filter-mode {
+  grid-template-columns: repeat(11, 60px);
+}
+
+
+.moodboard-container.moodboard-reduced .moodboard-grid {
+  display: grid;
+  gap: 5px; /* Espacement entre les miniatures réduit */
+  grid-template-columns: repeat(25, 13px); /* Colonnes étroites */
+  grid-template-rows: repeat(auto, 5px); /* Lignes étroites */
+  transform: scale(0.5); /* Réduction de l'échelle */
+
+  --border-radius: 5px; /* Bord réduit */
+}
+
+
+
+.moodboard-container.moodboard-full .moodboard-grid {
+  display: grid;
+  gap: 15px; /* Espacement entre les miniatures normal */
+  grid-template-columns: repeat(15, 40px); /* Colonnes normales */
+  grid-template-rows: repeat(auto, 25px); /* Lignes normales */
+  transform: scale(1); /* Taille normale */
+
+  border-radius: 8px; /* Bord normal */
+}
+
+#logo-container {
+  text-align: left;
+  margin: 0;
+  padding: 20px;
+  position: fixed;
+  z-index: 100;
+  user-select: none;
+}
+
+
+#logo-container img {
+  max-width: 40%; /* Assure que l'image respecte les dimensions */
+  transition: max-width 0.5s ease, transform 0.5s ease; /* Transition fluide */
+}
+
+/* Logo réduit */
+.logo-small img {
+  max-width: 40%; /* Assure que l'image respecte les dimensions */
+  text-align: left;
+  margin: 0;
+  padding: 20px;
+  position: fixed;
+  right: 68%;
+  bottom: 63%;
+  z-index: 100;
+  user-select: none;
+  transform: scale(0.5); /* Réinitialisation de l'effet */
+  transform-origin: center;
+}
+
+.logo-small img:hover {
+  transform: scale(0.53); /* Réinitialisation de l'effet */
+}
+
+.logo-large img:hover {
+  transform: scale(0.93); /* Réinitialisation de l'effet */
+}
+
+/* Logo agrandi */
+.logo-large img {
+  max-width: 40%; /* Assure que l'image respecte les dimensions */
+  right: 60%;
+  bottom: 50%;
+  text-align: left;
+  margin: 0;
+  padding: 20px;
+  position: fixed;
+  z-index: 100;
+  user-select: none;
+  transform: scale(0.9); /* Réinitialisation de l'effet */
+}
+
+/* Masquer les boutons et le texte */
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease; /* Disparition fluide */
+}
+
+
+#description {
+  position: absolute;
+  top: 35%;
+left: -5%;
+  text-align: left;
+  margin: 110px;
+  font-family: 'aventa'; /* Police que vous avez intégrée */
+  color: white;
+  line-height: 1.5;
+
+}
+
+#description h1 {
+  font-size: 23px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  line-height: .9;
+
+}
+
+#description p {
+  font-size: 20px;
+  line-height: 1;
+}
+
+
+
+#filter-buttons {
+  position: absolute;
+  top: 5%; /* Distance depuis le haut */
+  right: -2.5%; /* Distance depuis le bord droit */
+  display: flex;
+  flex-direction: column; /* Aligner les boutons verticalement */
+  align-items: flex-start; /* Les aligner à gauche */
+  gap: 40px; /* Espace entre les boutons */
+
+}
+
+.filter-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-family: 'arges', sans-serif; /* Police intégrée */
+  font-size: 80px;
+  text-transform: uppercase;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.3s;
+  line-height: 80%; /* Espacement entre les lignes à l'intérieur d'un bouton */
+  font-weight: 500;
+  /* Supprimer `gap` ici car ce n'est pas applicable */
+}
+
+
+
+
+/* ---- Style de la fenêtre modale ---- */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: var(--z-index-modal);
+  justify-content: center; /* Centre horizontalement */
+  align-items: center;    /* Centre verticalement */
+  pointer-events: none;
+}
+
+
+.modal.active {
+display:flex;
+pointer-events: auto;
+user-select: none;
+}
+
+.modal-content {
+position: relative;
+width: 80%;
+left : 20%;
+max-width: 600px;
+margin: auto; /* Centre le contenu horizontalement */
+user-select: none;
+}
+
+
+/* Bouton pour fermer la modale */
+.close {
+position: absolute;
+top: 10px;
+right: 20px;
+color: white;
+font-size: 24px;
+cursor: pointer;
+}
+
+iframe {
+width: 100%;
+height: 300px;
+
+}
+
+
+
+/* Panel de crédits */
+.credits-panel {
+  position: fixed;
+  top: 25%;
+  left: 0px; /* Position à gauche */
+  width: 400px;
+
+
+  background: transparent; /* Fond transparent */
+  color: rgb(255, 255, 255);
+  padding: 2rem;
+  transition: opacity 0.3s var(--transition-ease);
+  z-index: var(--z-index-modal);
+  opacity: 0;
+  pointer-events: none;
+  font-family: 'aventa';
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.credits-panel.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.credits-header {
+  margin-top: 0.0rem;
+  
+}
+
+.credits-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: white;
+  font-weight: 800;
+  
+}
+
+.credits-section {
+  margin-bottom: 0rem;
+}
+
+.credits-role {
+  color: rgb(255, 255, 255);
+  font-size: 1rem;
+  margin-top: 0; /* Aucune marge supplémentaire au-dessus */
+  margin-bottom: 0rem; /* Réduction de l'espace en dessous */
+  font-weight: 800;
+  letter-spacing: 0rem;
+}
+
+.credits-name {
+  display: inline-block;
+  cursor: pointer;
+  padding: 0; /* Pas d'espace interne supplémentaire */
+  margin: 0; /* Pas de marges autour des noms */
+  font-size: 0.5rem;
+  font-weight: 700;
+  line-height: 1; /* Réduit la hauteur de ligne */
+  color: rgba(255, 255, 255, 0.712); /* Couleur initiale */
+}
+
+.credits-name:hover {
+  transform: scale(1.1); /* Agrandit légèrement le texte */
+  color: #ffffff; /* Change la couleur en blanc pur */
+}
+
+
+/* Cache la croix de fermeture puisque le générique se fermera avec la modale */
+.credits-close {
+  display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+/* Styles spécifiques pour les tablettes */
+/* @media only screen and (min-width: 768px) and (max-width: 1224px) {
+
+  body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--background-color);
+  }
+
+  #logo-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 660px;
+  height: 450px;
+  transform: translate(-50%, -50%);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  z-index: -1; 
+  pointer-events: auto;
+
+  transition: all var(--transition-duration) var(--transition-ease);
+}
+
+
+
+  .moodboard-grid {
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(25, 65px);
+    grid-template-rows: repeat(auto, 5px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: center center; 
+    outline: 2px transparent;
+    cursor: grab;
+  
+    touch-action: none; 
+  
+    will-change: transform;
+    backface-visibility: hidden;
+    user-select: none;
+  
+  }
+
+  .moodboard-grid.filter-mode {
+    grid-template-columns: repeat(11, 55px);
+    grid-template-rows: repeat(auto, 5px);
+  }
+  
+
+  .miniature {
+      border-radius: 10px; 
+  }
+
+  .modal-content {
+      width: 95%; 
+      max-width: none;
+  }
+
+  iframe {
+      height: 200px; 
+  }
+
+  .credits-panel {
+      width: 90%; 
+      left: 5%;
+      padding: 1rem; 
+  }
+
+  .credits-header h2 {
+      font-size: 1.5rem; 
+  }
+
+  .credits-role {
+      font-size: 1rem; 
+  }
+} */
+
+
+
