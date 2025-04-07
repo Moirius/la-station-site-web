@@ -4,9 +4,11 @@ body {
   margin: 0;
   padding: 0;
   background: #ffffff;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Aventa', sans-serif;
   color: #111;
   display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
 }
 

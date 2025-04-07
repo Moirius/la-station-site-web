@@ -24,7 +24,8 @@ async function sendMessage() {
     const data = await res.json();
     const answer = data.answer;
 
-    chatbox.innerHTML = marked.parse(answer);
+    typeWriterEffect(chatbox, marked.parse(answer));
+
 
   } catch (err) {
     chatbox.innerHTML += `\n\n❌ Erreur : impossible de contacter le serveur.`;
@@ -36,7 +37,11 @@ async function sendMessage() {
   }
 }
 
-function typeWriterEffect(element, text) {
+function typeWriterEffect(element, html) {
+  let tempDiv = document.createElement("div");
+  tempDiv.innerHTML = html;
+  let text = tempDiv.textContent || tempDiv.innerText || "";
+
   let i = 0;
   element.innerHTML = "";
   const interval = setInterval(() => {
@@ -50,3 +55,4 @@ function typeWriterEffect(element, text) {
     if (i >= text.length) clearInterval(interval);
   }, 15);
 }
+
